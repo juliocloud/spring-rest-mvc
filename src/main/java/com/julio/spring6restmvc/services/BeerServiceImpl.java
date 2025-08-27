@@ -1,31 +1,45 @@
 package com.julio.spring6restmvc.services;
 
 import com.julio.spring6restmvc.model.Beer;
-import com.julio.spring6restmvc.model.BeerStyle;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @Service
 public class BeerServiceImpl implements BeerService {
+
+    public BeerServiceImpl() {
+        this.beerMap = new HashMap<>();
+
+        Beer beer_one = Beer.builder()
+                .id(UUID.randomUUID())
+                .version(1)
+                .beerName("Heineken")
+                .build();
+
+        Beer beer_two = Beer.builder()
+                .id(UUID.randomUUID())
+                .version(2)
+                .beerName("Brahma")
+                .build();
+
+        this.beerMap.put(beer_one.getId(), beer_one);
+        this.beerMap.put(beer_two.getId(), beer_two);
+    }
+
+    private Map<UUID, Beer> beerMap;
+
+    @Override
+    public List<Beer> listBeers(){
+        return new ArrayList<>(beerMap.values());
+    }
+
     @Override
     public Beer getBeerById(UUID id) {
 
         log.debug("Get beer id was called");
-        return Beer.builder()
-                .id(id)
-                .version(1)
-                .beerName("Heineken")
-                .beerStyle(BeerStyle.IPA)
-                .upc("1234")
-                .price(BigDecimal.TEN)
-                .quantityOnHand(12)
-                .createdDate(LocalDateTime.now())
-                .updatedDate(LocalDateTime.now())
-                .build();
+        return beerMap.get(id);
     }
 }
