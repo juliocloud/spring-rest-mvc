@@ -14,7 +14,7 @@ public class BeerServiceImpl implements BeerService {
         this.beerMap = new HashMap<>();
 
         Beer beer_one = Beer.builder()
-                .id(UUID.randomUUID())
+                .id(UUID.fromString("550e8400-e29b-41d4-a716-446655440000"))
                 .version(1)
                 .beerName("Heineken")
                 .build();
