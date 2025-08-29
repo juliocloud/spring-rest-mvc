@@ -3,6 +3,8 @@ package com.julio.spring6restmvc.services;
 import com.julio.spring6restmvc.model.Costumer;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -10,7 +12,26 @@ public class CostumerServiceImpl implements CostumerService{
     private Map<UUID, Costumer> costumerMap;
 
     public CostumerServiceImpl() {
+        this.costumerMap = new HashMap<>();
 
+        Costumer costumer1 = Costumer.builder()
+                .name("Claudio Seña")
+                .id(UUID.randomUUID())
+                .updatedDate(LocalDateTime.now())
+                .createdDate(LocalDateTime.now())
+                .version(BigDecimal.TEN)
+                .build();
+
+        Costumer costumer2 = Costumer.builder()
+                .name("Leandra")
+                .id(UUID.randomUUID())
+                .updatedDate(LocalDateTime.now())
+                .createdDate(LocalDateTime.now())
+                .version(BigDecimal.TEN)
+                .build();
+
+        this.costumerMap.put(costumer1.getId(), costumer1);
+        this.costumerMap.put(costumer2.getId(), costumer2);
     }
 
     @Override

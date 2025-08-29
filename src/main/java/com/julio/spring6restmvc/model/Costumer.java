@@ -1,18 +1,18 @@
 package com.julio.spring6restmvc.model;
 
+import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
 
+@Builder
 @Data
-@NoArgsConstructor
 public class Costumer {
     private UUID id;
-    private String costumerName;
-    private Integer version;
+    private String name;
+    private BigDecimal version;
     private LocalDateTime createdDate;
-    private LocalDateTime lastModifiedDate;
+    private LocalDateTime updatedDate;
 }
