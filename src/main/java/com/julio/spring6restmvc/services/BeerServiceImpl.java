@@ -16,7 +16,7 @@ public class BeerServiceImpl implements BeerService {
         Beer beer_one = Beer.builder()
                 .id(UUID.fromString("550e8400-e29b-41d4-a716-446655440000"))
                 .version(1)
-                .beerName("Heineken")
+                .beerName("Heineke")
                 .build();
 
         Beer beer_two = Beer.builder()
