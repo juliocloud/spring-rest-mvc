@@ -4,6 +4,7 @@ import com.julio.spring6restmvc.model.Beer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Slf4j
@@ -41,5 +42,23 @@ public class BeerServiceImpl implements BeerService {
 
         log.debug("Get beer id was called");
         return beerMap.get(id);
+    }
+
+    @Override
+    public Beer saveNewBeer(Beer newBeer) {
+
+        Beer saved = Beer.builder()
+                .id(UUID.randomUUID())
+                .createdDate(LocalDateTime.now())
+                .updatedDate(LocalDateTime.now())
+                .version(10)
+                .beerName(newBeer.getBeerName())
+                .upc(newBeer.getUpc())
+                .beerStyle(newBeer.getBeerStyle())
+                .price(newBeer.getPrice())
+                .quantityOnHand(newBeer.getQuantityOnHand())
+                .build();
+        beerMap.put(saved.getId() , saved);
+        return saved;
     }
 }

@@ -4,11 +4,11 @@ import com.julio.spring6restmvc.model.Beer;
 import com.julio.spring6restmvc.services.BeerService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -19,6 +19,16 @@ import java.util.UUID;
 @RequestMapping("/api/v1/beer")
 public class BeerController {
     private final BeerService beerService;
+
+    @PostMapping
+    public ResponseEntity handlePost(@RequestBody Beer newBeer){
+        Beer saved = beerService.saveNewBeer(newBeer);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Location", "/api/v1/beer/" + saved.getId().toString());
+
+        return new ResponseEntity(headers, HttpStatus.CREATED);
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     private List<Beer> listBeers(){
