@@ -9,6 +9,8 @@ public interface CostumerService {
 
     //List<Costumer> listCostumers();
 
+    List<Costumer> listCostumers();
+
     Costumer getCostumerById(UUID costumerId);
 
     Costumer createCostumer(Costumer costumer);
