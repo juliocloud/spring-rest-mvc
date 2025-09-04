@@ -43,4 +43,20 @@ public class CostumerServiceImpl implements CostumerService{
     public Costumer getCostumerById(UUID costumerId){
         return costumerMap.get(costumerId);
     }
+
+    @Override
+    public Costumer createCostumer(Costumer costumer){
+        Costumer newCostumer = Costumer.builder()
+                .id(UUID.randomUUID())
+                .name(costumer.getName())
+                .createdDate(LocalDateTime.now())
+                .version(BigDecimal.TEN)
+                .updatedDate(LocalDateTime.now())
+                .createdDate(LocalDateTime.now())
+                .build();
+
+        costumerMap.put(newCostumer.getId(), newCostumer);
+
+        return newCostumer;
+    }
 }
