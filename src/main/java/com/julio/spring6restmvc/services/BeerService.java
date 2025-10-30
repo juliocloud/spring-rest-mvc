@@ -13,4 +13,6 @@ public interface BeerService {
     Beer saveNewBeer(Beer newBeer);
 
     void updateById(UUID id, Beer beer);
+
+    void deleteById(UUID beerId);
 }

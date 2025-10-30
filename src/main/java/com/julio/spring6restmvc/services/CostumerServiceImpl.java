@@ -1,6 +1,7 @@
 package com.julio.spring6restmvc.services;
 
 import com.julio.spring6restmvc.model.Costumer;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -8,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
+@Slf4j
 public class CostumerServiceImpl implements CostumerService{
     private Map<UUID, Costumer> costumerMap;
 
@@ -58,5 +60,23 @@ public class CostumerServiceImpl implements CostumerService{
         costumerMap.put(newCostumer.getId(), newCostumer);
 
         return newCostumer;
+    }
+
+    @Override
+    public void updateById(UUID costumerId, Costumer costumer){
+        Costumer originalCostumer = this.getCostumerById(costumerId);
+        if(Objects.isNull(originalCostumer)){
+            log.info("No beer existing with id " + costumerId.toString());
+            return;
+        }
+        originalCostumer.setName(costumer.getName());
+        originalCostumer.setVersion(costumer.getVersion());
+        originalCostumer.setUpdatedDate(LocalDateTime.now());
+        costumerMap.put(originalCostumer.getId(), originalCostumer);
+    }
+
+    @Override
+    public void deleteById(UUID costumerId) {
+        costumerMap.remove(costumerId);
     }
 }

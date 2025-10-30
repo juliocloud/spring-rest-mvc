@@ -14,4 +14,8 @@ public interface CostumerService {
     Costumer getCostumerById(UUID costumerId);
 
     Costumer createCostumer(Costumer costumer);
+
+    void updateById(UUID costumerId, Costumer costumer);
+
+    void deleteById(UUID costumerId);
 }
