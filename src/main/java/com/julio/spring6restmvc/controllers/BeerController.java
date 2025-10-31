@@ -4,6 +4,7 @@ import com.julio.spring6restmvc.model.Beer;
 import com.julio.spring6restmvc.services.BeerService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.graphql.GraphQlProperties;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,5 +50,11 @@ public class BeerController {
     @RequestMapping(value = "{beerId}", method = RequestMethod.GET)
     public Beer getBeerById(@PathVariable UUID beerId){
         return beerService.getBeerById(beerId);
+    }
+
+    @PatchMapping("{beerId}")
+    public ResponseEntity patchBeerById(@PathVariable UUID beerId, @RequestBody Beer beer){
+        beerService.patchBeerById(beerId, beer);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }

@@ -3,6 +3,7 @@ package com.julio.spring6restmvc.services;
 import com.julio.spring6restmvc.model.Costumer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -78,5 +79,13 @@ public class CostumerServiceImpl implements CostumerService{
     @Override
     public void deleteById(UUID costumerId) {
         costumerMap.remove(costumerId);
+    }
+
+    @Override
+    public void patchById(UUID costumerId, Costumer costumer) {
+        Costumer existing = costumerMap.get(costumerId);
+
+        if(StringUtils.hasText(costumer.getName()))
+            existing.setName(costumer.getName());
     }
 }

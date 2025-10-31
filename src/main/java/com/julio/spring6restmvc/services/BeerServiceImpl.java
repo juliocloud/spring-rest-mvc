@@ -1,8 +1,10 @@
 package com.julio.spring6restmvc.services;
 
+import ch.qos.logback.core.util.StringUtil;
 import com.julio.spring6restmvc.model.Beer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -11,7 +13,9 @@ import java.util.*;
 @Service
 public class BeerServiceImpl implements BeerService {
 
-    public BeerServiceImpl() {
+    private final BeerService beerService;
+
+    public BeerServiceImpl(BeerService beerService) {
         this.beerMap = new HashMap<>();
 
         Beer beer_one = Beer.builder()
@@ -28,6 +32,7 @@ public class BeerServiceImpl implements BeerService {
 
         this.beerMap.put(beer_one.getId(), beer_one);
         this.beerMap.put(beer_two.getId(), beer_two);
+        this.beerService = beerService;
     }
 
     private Map<UUID, Beer> beerMap;
@@ -82,5 +87,19 @@ public class BeerServiceImpl implements BeerService {
     @Override
     public void deleteById(UUID beerId) {
         beerMap.remove(beerId);
+    }
+
+    @Override
+    public void patchBeerById(UUID beerId, Beer beer) {
+        Beer existing = beerMap.get(beerId);
+
+        if(StringUtils.hasText(beer.getBeerName()))
+            existing.setBeerName(beer.getBeerName());
+
+        if(Objects.nonNull(beer.getBeerStyle()))
+            existing.setBeerStyle(beer.getBeerStyle());
+
+        if(Objects.nonNull(beer.getPrice()))
+            existing.setPrice(beer.getPrice());
     }
 }
