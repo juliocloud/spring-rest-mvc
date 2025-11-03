@@ -13,9 +13,7 @@ import java.util.*;
 @Service
 public class BeerServiceImpl implements BeerService {
 
-    private final BeerService beerService;
-
-    public BeerServiceImpl(BeerService beerService) {
+    public BeerServiceImpl() {
         this.beerMap = new HashMap<>();
 
         Beer beer_one = Beer.builder()
@@ -32,7 +30,6 @@ public class BeerServiceImpl implements BeerService {
 
         this.beerMap.put(beer_one.getId(), beer_one);
         this.beerMap.put(beer_two.getId(), beer_two);
-        this.beerService = beerService;
     }
 
     private Map<UUID, Beer> beerMap;
