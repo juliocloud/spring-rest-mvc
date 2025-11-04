@@ -5,6 +5,7 @@ import com.julio.spring6restmvc.model.Costumer;
 import com.julio.spring6restmvc.services.BeerService;
 import com.julio.spring6restmvc.services.CostumerService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.User;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,13 +17,13 @@ import javax.print.attribute.standard.ColorSupported;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/costumer")
 @RequiredArgsConstructor
 public class CostumerController {
 
     private final CostumerService costumerService;
-    private final BeerService beerService;
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Costumer> listCostumers(){
