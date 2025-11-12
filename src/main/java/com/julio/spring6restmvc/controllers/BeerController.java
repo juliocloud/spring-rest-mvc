@@ -27,6 +27,7 @@ public class BeerController {
         beerService.deleteById(beerId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
+
     @PutMapping("{beerId}")
     public ResponseEntity updateById(@PathVariable("beerId") UUID id, @RequestBody Beer beer) throws Exception {
         beerService.updateById(id, beer);
