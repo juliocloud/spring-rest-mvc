@@ -1,9 +1,6 @@
 package com.julio.spring6restmvc.model;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
@@ -14,6 +11,8 @@ import java.util.UUID;
 @Data
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Costumer {
     private UUID id;
     private String name;

@@ -13,11 +13,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.UUID;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.hamcrest.Matchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(CostumerController.class)
@@ -37,6 +39,19 @@ class CostumerControllerTest {
     @BeforeEach
     void setup(){
         costumerServiceImpl = new CostumerServiceImpl();
+    }
+
+    @Test
+    void testUpdateCostumer() throws Exception {
+        Costumer costumer = costumerServiceImpl.listCostumers().get(0);
+
+        mockMvc.perform(put("/api/v1/costumer/" + costumer.getId())
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(costumer)))
+                .andExpect(status().isNoContent());
+
+        verify(costumerService).updateById(any(UUID.class), any(Costumer.class));
     }
 
     @Test
