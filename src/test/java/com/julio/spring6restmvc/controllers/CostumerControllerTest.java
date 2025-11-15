@@ -15,6 +15,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -42,14 +44,34 @@ class CostumerControllerTest {
     @Captor
     ArgumentCaptor<UUID> uuidArgumentCaptor;
 
+    @Captor
+    ArgumentCaptor<Costumer> costumerArgumentCaptor;
+
     @BeforeEach
     void setup(){
         costumerServiceImpl = new CostumerServiceImpl();
     }
 
     @Test
-    void testPatchBeer(){
+    void testPatchCostumer() throws Exception{
+        Costumer costumer = costumerServiceImpl.listCostumers().getFirst();
 
+        Map<String, Object> costumerMap = new HashMap<>();
+
+        costumerMap.put("costumerName", "New Costumer name");
+
+        mockMvc.perform(patch("/api/v1/costumer/" + costumer.getId())
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(costumerMap)))
+                .andExpect(status().isNoContent());
+
+        verify(costumerService).patchById(
+                uuidArgumentCaptor.capture(),
+                costumerArgumentCaptor.capture()
+        );
+
+        assertThat(costumerMap.get("costumerName")).isEqualTo(costumerArgumentCaptor.getValue().getName());
     }
 
     @Test
