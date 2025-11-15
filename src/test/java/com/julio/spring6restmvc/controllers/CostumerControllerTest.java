@@ -8,6 +8,7 @@ import com.julio.spring6restmvc.services.CostumerServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
@@ -38,9 +39,17 @@ class CostumerControllerTest {
     @Autowired
     ObjectMapper objectMapper;
 
+    @Captor
+    ArgumentCaptor<UUID> uuidArgumentCaptor;
+
     @BeforeEach
     void setup(){
         costumerServiceImpl = new CostumerServiceImpl();
+    }
+
+    @Test
+    void testPatchBeer(){
+
     }
 
     @Test
@@ -51,8 +60,6 @@ class CostumerControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
-
-        ArgumentCaptor<UUID> uuidArgumentCaptor = ArgumentCaptor.forClass(UUID.class);
 
         verify(costumerService).deleteById(uuidArgumentCaptor.capture());
 
