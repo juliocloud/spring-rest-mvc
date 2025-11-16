@@ -48,22 +48,22 @@ class CostumerControllerTest {
     ArgumentCaptor<Costumer> costumerArgumentCaptor;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         costumerServiceImpl = new CostumerServiceImpl();
     }
 
     @Test
-    void testPatchCostumer() throws Exception{
+    void testPatchCostumer() throws Exception {
         Costumer costumer = costumerServiceImpl.listCostumers().getFirst();
 
         Map<String, Object> costumerMap = new HashMap<>();
 
-        costumerMap.put("costumerName", "New Costumer name");
+        costumerMap.put("name", "New Costumer name");
 
-        mockMvc.perform(patch(CostumerController.COSTUMER_PATH + costumer.getId())
-                .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(costumerMap)))
+        mockMvc.perform(patch(CostumerController.COSTUMER_PATH_ID, costumer.getId())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(costumerMap)))
                 .andExpect(status().isNoContent());
 
         verify(costumerService).patchById(
@@ -71,16 +71,16 @@ class CostumerControllerTest {
                 costumerArgumentCaptor.capture()
         );
 
-        assertThat(costumerMap.get("costumerName")).isEqualTo(costumerArgumentCaptor.getValue().getName());
+        assertThat(costumerMap.get("name")).isEqualTo(costumerArgumentCaptor.getValue().getName());
     }
 
     @Test
     void testDeleteCostumer() throws Exception {
         Costumer costumer = costumerServiceImpl.listCostumers().get(0);
 
-        mockMvc.perform(delete(CostumerController.COSTUMER_PATH + costumer.getId())
-                .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(delete(CostumerController.COSTUMER_PATH_ID, costumer.getId())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
 
         verify(costumerService).deleteById(uuidArgumentCaptor.capture());
@@ -93,17 +93,17 @@ class CostumerControllerTest {
     void testUpdateCostumer() throws Exception {
         Costumer costumer = costumerServiceImpl.listCostumers().get(0);
 
-        mockMvc.perform(put(CostumerController.COSTUMER_PATH + costumer.getId())
-                .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(costumer)))
+        mockMvc.perform(put(CostumerController.COSTUMER_PATH_ID, costumer.getId())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(costumer)))
                 .andExpect(status().isNoContent());
 
         verify(costumerService).updateById(any(UUID.class), any(Costumer.class));
     }
 
     @Test
-    void testCreateNewCostumer() throws Exception{
+    void testCreateNewCostumer() throws Exception {
         Costumer costumer = costumerServiceImpl.listCostumers().get(0);
 
         costumer.setId(null);
@@ -111,8 +111,7 @@ class CostumerControllerTest {
 
         given(costumerService.createCostumer(any(Costumer.class))).willReturn(costumerServiceImpl.listCostumers().get(1));
 
-        mockMvc.perform(
-                post(CostumerController.COSTUMER_PATH)
+        mockMvc.perform(post(CostumerController.COSTUMER_PATH)
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(costumer)))
@@ -137,8 +136,8 @@ class CostumerControllerTest {
 
         given(costumerService.getCostumerById(testCostumer.getId())).willReturn(testCostumer);
 
-        mockMvc.perform(get(CostumerController.COSTUMER_PATH + testCostumer.getId())
-                .accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get(CostumerController.COSTUMER_PATH_ID, testCostumer.getId())
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", is(testCostumer.getId().toString())));
