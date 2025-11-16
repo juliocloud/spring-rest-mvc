@@ -19,23 +19,25 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/costumer")
 @RequiredArgsConstructor
 public class CostumerController {
 
+    public static final String COSTUMER_PATH = "/api/v1/costumer/";
+    public static final String COSTUMER_PATH_ID = COSTUMER_PATH + "{costumerId}";
+
     private final CostumerService costumerService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = COSTUMER_PATH, method = RequestMethod.GET)
     public List<Costumer> listCostumers(){
         return costumerService.listCostumers();
     }
 
-    @RequestMapping(value = "/{costumerId}", method = RequestMethod.GET)
+    @RequestMapping(value = COSTUMER_PATH_ID, method = RequestMethod.GET)
     public Costumer getById(@PathVariable("costumerId") UUID id){
         return costumerService.getCostumerById(id);
     }
 
-    @PostMapping
+    @PostMapping(value = COSTUMER_PATH)
     public ResponseEntity<Costumer> createCostumer(@RequestBody Costumer costumer){
         Costumer created = costumerService.createCostumer(costumer);
         HttpHeaders headers = new HttpHeaders();
@@ -43,20 +45,20 @@ public class CostumerController {
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
-    @PutMapping("{costumerId}")
+    @PutMapping(value = COSTUMER_PATH_ID)
     public ResponseEntity<Costumer> updateCostumerById(@PathVariable("costumerId") String costumerId, @RequestBody Costumer costumer){
         UUID cId = UUID.fromString(costumerId);
         costumerService.updateById(cId, costumer);
         return new ResponseEntity<Costumer>(HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping("{costumerId}")
+    @DeleteMapping(value = COSTUMER_PATH_ID)
     public ResponseEntity deleteById(@PathVariable UUID costumerId){
         costumerService.deleteById(costumerId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
-    @PatchMapping("{costumerId}")
+    @PatchMapping(value = COSTUMER_PATH_ID)
     public ResponseEntity patchById(@PathVariable UUID costumerId, @RequestBody Costumer costumer){
         costumerService.patchById(costumerId, costumer);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
