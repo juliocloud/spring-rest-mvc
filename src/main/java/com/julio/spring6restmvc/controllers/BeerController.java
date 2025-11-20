@@ -2,14 +2,11 @@ package com.julio.spring6restmvc.controllers;
 
 import com.julio.spring6restmvc.model.Beer;
 import com.julio.spring6restmvc.services.BeerService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.graphql.GraphQlProperties;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +15,7 @@ import java.util.UUID;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/")
 public class BeerController {
 
     public static final String BEER_PATH = "/api/v1/beer/";

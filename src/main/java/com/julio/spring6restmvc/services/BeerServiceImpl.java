@@ -1,6 +1,5 @@
 package com.julio.spring6restmvc.services;
 
-import ch.qos.logback.core.util.StringUtil;
 import com.julio.spring6restmvc.model.Beer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

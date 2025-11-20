@@ -1,19 +1,14 @@
 package com.julio.spring6restmvc.controllers;
 
-import com.julio.spring6restmvc.model.Beer;
 import com.julio.spring6restmvc.model.Costumer;
-import com.julio.spring6restmvc.services.BeerService;
 import com.julio.spring6restmvc.services.CostumerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.print.attribute.standard.ColorSupported;
 import java.util.List;
 import java.util.UUID;
 

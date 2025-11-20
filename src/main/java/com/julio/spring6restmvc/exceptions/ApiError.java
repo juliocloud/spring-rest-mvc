@@ -3,7 +3,6 @@ package com.julio.spring6restmvc.exceptions;
 
 import org.springframework.http.HttpStatus;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
