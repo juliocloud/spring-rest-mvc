@@ -52,7 +52,7 @@ public class BeerController {
 
     @RequestMapping(value = BEER_PATH_ID, method = RequestMethod.GET)
     public Beer getBeerById(@PathVariable UUID beerId){
-        return beerService.getBeerById(beerId);
+        return beerService.getBeerById(beerId).orElseThrow(NotFoundException::new);
     }
 
     @PatchMapping(BEER_PATH_ID)
