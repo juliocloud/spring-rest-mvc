@@ -1,5 +1,6 @@
 package com.julio.spring6restmvc.services;
 
+import com.julio.spring6restmvc.controllers.NotFoundException;
 import com.julio.spring6restmvc.model.Costumer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -43,8 +44,8 @@ public class CostumerServiceImpl implements CostumerService{
     }
 
     @Override
-    public Costumer getCostumerById(UUID costumerId){
-        return costumerMap.get(costumerId);
+    public Optional<Costumer> getCostumerById(UUID costumerId){
+        return Optional.of(costumerMap.get(costumerId));
     }
 
     @Override
@@ -65,7 +66,7 @@ public class CostumerServiceImpl implements CostumerService{
 
     @Override
     public void updateById(UUID costumerId, Costumer costumer){
-        Costumer originalCostumer = this.getCostumerById(costumerId);
+        Costumer originalCostumer = this.getCostumerById(costumerId).orElseThrow(NotFoundException::new);
         if(Objects.isNull(originalCostumer)){
             log.info("No beer existing with id " + costumerId.toString());
             return;

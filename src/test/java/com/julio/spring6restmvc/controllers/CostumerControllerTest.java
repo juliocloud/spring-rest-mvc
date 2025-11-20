@@ -1,7 +1,6 @@
 package com.julio.spring6restmvc.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.julio.spring6restmvc.helpers.AnomalyCostumer;
 import com.julio.spring6restmvc.model.Costumer;
 import com.julio.spring6restmvc.services.CostumerService;
 import com.julio.spring6restmvc.services.CostumerServiceImpl;
@@ -17,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -55,7 +55,7 @@ class CostumerControllerTest {
     @Test
     void testCostumerNotFound() throws Exception {
 
-        given(costumerService.getCostumerById(any(UUID.class))).willThrow(NotFoundException.class);
+        given(costumerService.getCostumerById(any(UUID.class))).willReturn(Optional.empty());
 
         mockMvc.perform(
                 get(CostumerController.COSTUMER_PATH_ID, UUID.randomUUID())
@@ -144,7 +144,7 @@ class CostumerControllerTest {
 
         Costumer testCostumer = costumerServiceImpl.listCostumers().get(0);
 
-        given(costumerService.getCostumerById(testCostumer.getId())).willReturn(testCostumer);
+        given(costumerService.getCostumerById(testCostumer.getId())).willReturn(Optional.of(testCostumer));
 
         mockMvc.perform(get(CostumerController.COSTUMER_PATH_ID, testCostumer.getId())
                         .accept(MediaType.APPLICATION_JSON))
